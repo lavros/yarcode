@@ -22,72 +22,70 @@ AppAsset::register($this);
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
-<body id="page-top" class="index">
+<body>
 <?php $this->beginBody() ?>
 
-<div class="wrap">
-    <?php
-    NavBar::begin([
-        'brandLabel' => 'Web Studio',
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => [
-            'id' => 'mainNav',
-            'class' => 'navbar navbar-default navbar-custom navbar-fixed-top',
-        ],
-    ]);
-    $menuItems = [
+<?php
+NavBar::begin([
+    'brandLabel' => 'Web Studio',
+    'brandUrl' => Yii::$app->homeUrl,
+    'options' => [
+        'id' => 'mainNav',
+        'class' => 'navbar navbar-default navbar-custom navbar-fixed-top',
+    ],
+]);
+$menuItems = [
+    [
+        'label' => 'Services',
+        'url' => '/#services'
+    ],
+    [
+        'label' => 'Portfolio',
+        'url' => '/#portfolio'
+    ],
+    [
+        'label' => 'About',
+        'url' => '/#about'
+    ],
+    [
+        'label' => 'Team',
+        'url' => '/#team'
+    ],
+    [
+        'label' => 'Contact',
+        'url' => '/#contact'
+    ],
+];
+if (Yii::$app->user->isGuest) {
+    $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
+} else {
+    $menuItems[] = ['label' => '<i class="fa fa-user"></i> ' . Yii::$app->user->identity->name, 'items' => [
         [
-            'label' => 'Services',
-            'url' => ['/site/index', '#' => 'services']
+            'label' => 'Logout',
+            'url' => ['/site/logout'],
+            'linkOptions' => ['data-method' => 'post']
         ],
-        [
-            'label' => 'Portfolio',
-            'url' => ['/site/index', '#' => 'portfolio']
-        ],
-        [
-            'label' => 'About',
-            'url' => ['/site/index', '#' => 'about']
-        ],
-        [
-            'label' => 'Team',
-            'url' => ['/site/index', '#' => 'team']
-        ],
-        [
-            'label' => 'Contact',
-            'url' => ['/site/index', '#' => 'contact']
-        ],
-    ];
-    if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
-    } else {
-        $menuItems[] = ['label' => '<i class="fa fa-user"></i> ' . Yii::$app->user->identity->name, 'items' => [
-            [
-                'label' => 'Logout',
-                'url' => ['/site/logout'],
-                'linkOptions' => ['data-method' => 'post']
-            ],
-        ]];
-    }
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => $menuItems,
-        'encodeLabels' => false,
-    ]);
-    NavBar::end();
-    ?>
-    <!-- Header -->
-    <header>
-        <div class="container">
-            <div class="intro-text">
-                <div class="intro-lead-in">Welcome To Our Studio!</div>
-                <div class="intro-heading">It's Nice To Meet You</div>
-                <a href="#services" class="page-scroll btn btn-xl">Tell Me More</a>
-            </div>
+    ]];
+}
+echo Nav::widget([
+    'options' => ['class' => 'navbar-nav navbar-right'],
+    'items' => $menuItems,
+    'encodeLabels' => false,
+]);
+NavBar::end();
+?>
+<!-- Header -->
+<header>
+    <div class="container">
+        <div class="intro-text">
+            <div class="intro-lead-in">Welcome To Our Studio!</div>
+            <div class="intro-heading">It's Nice To Meet You</div>
+            <a href="#services" class="page-scroll btn btn-xl">Tell Me More</a>
         </div>
-    </header>
+    </div>
+</header>
 
-    <?= $content ?>
-</div>
+<?= $content ?>
 
 <footer class="footer">
     <div class="container">
