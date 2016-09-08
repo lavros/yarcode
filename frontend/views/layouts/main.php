@@ -22,20 +22,40 @@ AppAsset::register($this);
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
-<body>
+<body id="page-top" class="index">
 <?php $this->beginBody() ?>
 
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'YarCode',
+        'brandLabel' => 'Web Studio',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
+            'id' => 'mainNav',
+            'class' => 'navbar navbar-default navbar-custom navbar-fixed-top',
         ],
     ]);
     $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
+        [
+            'label' => 'Services',
+            'url' => ['/site/index', '#' => 'services']
+        ],
+        [
+            'label' => 'Portfolio',
+            'url' => ['/site/index', '#' => 'portfolio']
+        ],
+        [
+            'label' => 'About',
+            'url' => ['/site/index', '#' => 'about']
+        ],
+        [
+            'label' => 'Team',
+            'url' => ['/site/index', '#' => 'team']
+        ],
+        [
+            'label' => 'Contact',
+            'url' => ['/site/index', '#' => 'contact']
+        ],
     ];
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
@@ -55,17 +75,18 @@ AppAsset::register($this);
     ]);
     NavBar::end();
     ?>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="intro-text">
+                <div class="intro-lead-in">Welcome To Our Studio!</div>
+                <div class="intro-heading">It's Nice To Meet You</div>
+                <a href="#services" class="page-scroll btn btn-xl">Tell Me More</a>
+            </div>
+        </div>
+    </header>
 
-    <div class="container">
-        <?= AlertBlock::widget([
-            'useSessionFlash' => true,
-            'type' => AlertBlock::TYPE_GROWL
-        ]); ?>
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
-        <?= $content ?>
-    </div>
+    <?= $content ?>
 </div>
 
 <footer class="footer">

@@ -18,13 +18,17 @@ class AppAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
+        'css/agency.min.css',
         'css/site.css',
     ];
     public $js = [
+        '/js/jqBootstrapValidation.js',
+        '/js/contact_me.js',
+        '/js/agency.min.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',
-        'yii\bootstrap\BootstrapAsset',
+        'yii\bootstrap\BootstrapPluginAsset',
         'yarcode\fa\FontAwesomeBundle',
     ];
 }
