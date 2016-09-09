@@ -33,7 +33,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'content',
             'icon',
             'position',
-            'status',
+            [
+                'label' => $model->getAttributeLabel('status'),
+                'value' => $model->getStatusLabel(),
+            ],
             'created_by',
             'updated_by',
             'created_at',

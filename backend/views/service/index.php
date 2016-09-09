@@ -25,11 +25,17 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'name',
-            'content',
             'icon',
+            'name',
+            //'content',
             'position',
-            // 'status',
+            [
+                'attribute' => 'status',
+                'filter' => common\models\Service::getStatusLabels(),
+                'value' => function ($model) {
+                    return $model->getStatusLabel();
+                },
+            ],
             // 'created_by',
             // 'updated_by',
             // 'created_at',
