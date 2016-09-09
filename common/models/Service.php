@@ -3,6 +3,10 @@
 namespace common\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
+use yii\behaviors\BlameableBehavior;
+use yarcode\base\behaviors\TimestampBehavior;
+use yarcode\base\traits\StatusTrait;
 
 /**
  * This is the model class for table "{{%service}}".
@@ -20,6 +24,11 @@ use Yii;
  */
 class Service extends \yii\db\ActiveRecord
 {
+    use StatusTrait;
+
+    const STATUS_HIDDEN = 0;
+    const STATUS_PUBLISHED = 1;
+
     /**
      * @inheritdoc
      */
@@ -34,11 +43,26 @@ class Service extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'position', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'required'],
+            [['name', 'position', 'status'], 'required'],
             [['position', 'status', 'created_by', 'updated_by'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['name', 'icon'], 'string', 'max' => 255],
             [['content'], 'string', 'max' => 500],
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::className(),
+                'createdAtAttribute' => 'created_at',
+                'updatedAtAttribute' => 'created_at'
+            ],
+            BlameableBehavior::className(),
         ];
     }
 
@@ -68,5 +92,16 @@ class Service extends \yii\db\ActiveRecord
     public static function find()
     {
         return new ServiceQuery(get_called_class());
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public static function getStatusLabels()
+    {
+        return [
+            static::STATUS_HIDDEN => 'Hidden',
+            static::STATUS_PUBLISHED => 'Published',
+        ];
     }
 }
