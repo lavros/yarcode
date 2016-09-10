@@ -9,11 +9,6 @@ namespace common\models;
  */
 class ServiceQuery extends \yii\db\ActiveQuery
 {
-    /*public function active()
-    {
-        return $this->andWhere('[[status]]=1');
-    }*/
-
     /**
      * @inheritdoc
      * @return Service[]|array
@@ -30,5 +25,13 @@ class ServiceQuery extends \yii\db\ActiveQuery
     public function one($db = null)
     {
         return parent::one($db);
+    }
+
+    /**
+     * @return $this
+     */
+    public function published()
+    {
+        return $this->andWhere(['status' => Service::STATUS_PUBLISHED]);
     }
 }

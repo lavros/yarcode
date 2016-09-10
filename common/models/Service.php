@@ -46,7 +46,8 @@ class Service extends \yii\db\ActiveRecord
             [['name', 'position', 'status'], 'required'],
             [['position', 'status', 'created_by', 'updated_by'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
-            [['name', 'icon'], 'string', 'max' => 255],
+            [['icon'], 'image', 'extensions' => 'png, jpg, gif'],
+            [['name'], 'string', 'max' => 255],
             [['content'], 'string', 'max' => 500],
         ];
     }
@@ -57,6 +58,12 @@ class Service extends \yii\db\ActiveRecord
     public function behaviors()
     {
         return [
+            [
+                'class' => '\yiidreamteam\upload\FileUploadBehavior',
+                'attribute' => 'icon',
+                'filePath' => '@frontend/web/uploads/service/[[pk]].[[extension]]',
+                'fileUrl' => Yii::$app->params['frontendBaseUrl'] . '/uploads/service/[[pk]].[[extension]]',
+            ],
             [
                 'class' => TimestampBehavior::className(),
                 'createdAtAttribute' => 'created_at',

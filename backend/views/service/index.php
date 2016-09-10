@@ -25,14 +25,20 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'icon',
+            [
+                'attribute' => 'icon',
+                'format' => 'raw',
+                'value' => function($model) {
+                    return Html::img($model->getUploadedFileUrl('icon'));
+                },
+            ],
             'name',
             //'content',
             'position',
             [
                 'attribute' => 'status',
                 'filter' => common\models\Service::getStatusLabels(),
-                'value' => function ($model) {
+                'value' => function($model) {
                     return $model->getStatusLabel();
                 },
             ],
