@@ -68,7 +68,7 @@ class SiteController extends Controller
     public function actionIndex()
     {
         return $this->render('index', [
-            'services' => \common\models\Service::find()->published()->all(),
+            'services' => \common\models\Service::find()->orderByPosition()->published()->all(),
         ]);
     }
 
