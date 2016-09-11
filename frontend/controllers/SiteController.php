@@ -67,8 +67,36 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        $contact = new \common\models\Contact();
+
+        if (Yii::$app->request->post('Contact')) {
+            $contact->attributes = Yii::$app->request->post('Contact');
+            $contact->created_at = new yii\db\Expression('NOW()');
+
+            if ($contact->save()) {
+                Yii::$app->session->setFlash(
+                    'contactSubmitted',
+                    'Your message has been sent.',
+                    false
+                );
+
+                // For load created_at.
+                $contact->refresh();
+
+                Yii::$app->mailer->compose()
+                    ->setFrom('notify@agency.com')
+                    ->setTo('manager@agency.com')
+                    ->setSubject('agency.com: new message from contact form')
+                    ->setHtmlBody($contact->buildHtmlMessage())
+                    ->send();
+
+                $this->refresh('#contact');
+            }
+        }
+
         return $this->render('index', [
             'services' => \common\models\Service::find()->orderByPosition()->published()->all(),
+            'contact' => $contact,
         ]);
     }
 

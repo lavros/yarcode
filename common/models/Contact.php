@@ -4,6 +4,7 @@ namespace common\models;
 
 use Yii;
 use yarcode\base\traits\StatusTrait;
+use yii\helpers\Html;
 
 /**
  * This is the model class for table "{{%contact}}".
@@ -84,5 +85,22 @@ class Contact extends \yii\db\ActiveRecord
             static::STATUS_UNREADED => 'Unreaded',
             static::STATUS_READED => 'Readed',
         ];
+    }
+
+    /**
+     * It arranges data in HTML format for sending by email.
+     *
+     * @return string html message
+     */
+    public function buildHtmlMessage()
+    {
+        return
+            Html::tag('p', Html::a('Open message in control panel', sprintf(Yii::$app->params['backendViewContact'], $this->id))) .
+            Html::tag('p', Html::tag('b', 'Sended at: ') . Yii::$app->formatter->asDatetime($this->created_at, 'medium')) . "\n" .
+            Html::tag('p', Html::tag('b', 'Name: ') . Html::encode($this->name)) . "\n" .
+            Html::tag('p', Html::tag('b', 'Email: ') . Html::encode($this->email)) . "\n" .
+            Html::tag('p', Html::tag('b', 'Phone: ') . Html::encode($this->phone)) . "\n" .
+            Html::tag('p', Html::tag('b', 'Message: ') . nl2br(Html::encode($this->message)));
+
     }
 }
