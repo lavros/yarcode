@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yarcode\base\traits\StatusTrait;
 
 /**
  * This is the model class for table "{{%contact}}".
@@ -18,6 +19,11 @@ use Yii;
  */
 class Contact extends \yii\db\ActiveRecord
 {
+    use StatusTrait;
+
+    const STATUS_UNREADED = 0;
+    const STATUS_READED = 1;
+
     /**
      * @inheritdoc
      */
@@ -32,12 +38,14 @@ class Contact extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'email', 'phone', 'message', 'created_at', 'readed_at', 'status'], 'required'],
+            [['name', 'email', 'phone', 'message'], 'required'],
             [['message'], 'string'],
             [['created_at', 'readed_at'], 'safe'],
             [['status'], 'integer'],
             [['name', 'phone'], 'string', 'max' => 50],
             [['email'], 'string', 'max' => 100],
+            [['email'], 'email'],
+            [['status'], 'default', 'value' => self::STATUS_UNREADED],
         ];
     }
 
@@ -65,5 +73,16 @@ class Contact extends \yii\db\ActiveRecord
     public static function find()
     {
         return new ContactQuery(get_called_class());
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public static function getStatusLabels()
+    {
+        return [
+            static::STATUS_UNREADED => 'Unreaded',
+            static::STATUS_READED => 'Readed',
+        ];
     }
 }
