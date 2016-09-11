@@ -25,13 +25,20 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
+            'created_at:datetime',
             'name',
             'email:email',
             'phone',
-            'message:ntext',
-            // 'created_at',
+            //'message:ntext',
             // 'readed_at',
-            // 'status',
+            [
+                'attribute' => 'status',
+                'filter' => common\models\Contact::getStatusLabels(),
+                'value' => function($model) {
+                    return $model->getStatusLabel();
+                },
+            ],
+            // 'readed_by',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

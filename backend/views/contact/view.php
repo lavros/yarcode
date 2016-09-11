@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use common\models\UserAccount;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Contact */
@@ -25,18 +26,34 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </p>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'name',
-            'email:email',
-            'phone',
-            'message:ntext',
-            'created_at',
-            'readed_at',
-            'status',
-        ],
-    ]) ?>
+<?php
+
+$attributes = [
+    'id',
+    'created_at:datetime',
+    'name',
+    'email:email',
+    'phone',
+    'message:ntext',
+    [
+        'label' => $model->getAttributeLabel('status'),
+        'value' => $model->getStatusLabel(),
+    ],
+];
+
+if ($model->isReaded()) {
+    $attributes[] = 'readed_at:datetime';
+    $attributes[] = [
+        'label' => $model->getAttributeLabel('readed_by'),
+        'value' => UserAccount::findIdentity($model->readed_by)->profile->fullName,
+    ];
+}
+
+echo DetailView::widget([
+    'model' => $model,
+    'attributes' => $attributes,
+]);
+
+?>
 
 </div>

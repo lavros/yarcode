@@ -84,7 +84,18 @@ class ContactController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+
+            if ($model->isReaded()) {
+                $model->readed_at = new \yii\db\Expression('NOW()');
+                $model->readed_by = Yii::$app->user->identity->id;
+            } else {
+                $model->readed_at = '';
+                $model->readed_by = 0;
+            }
+
+            $model->save();
+
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [

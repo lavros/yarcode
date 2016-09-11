@@ -17,6 +17,7 @@ use yii\helpers\Html;
  * @property string $created_at
  * @property string $readed_at
  * @property integer $status
+ * @property integer $readed_by
  */
 class Contact extends \yii\db\ActiveRecord
 {
@@ -42,11 +43,12 @@ class Contact extends \yii\db\ActiveRecord
             [['name', 'email', 'phone', 'message'], 'required'],
             [['message'], 'string'],
             [['created_at', 'readed_at'], 'safe'],
-            [['status'], 'integer'],
+            [['status', 'readed_by'], 'integer'],
             [['name', 'phone'], 'string', 'max' => 50],
             [['email'], 'string', 'max' => 100],
             [['email'], 'email'],
             [['status'], 'default', 'value' => self::STATUS_UNREADED],
+            [['readed_by'], 'default', 'value' => 0],
         ];
     }
 
@@ -64,6 +66,7 @@ class Contact extends \yii\db\ActiveRecord
             'created_at' => 'Created At',
             'readed_at' => 'Readed At',
             'status' => 'Status',
+            'readed_by' => 'Readed By',
         ];
     }
 
@@ -102,5 +105,15 @@ class Contact extends \yii\db\ActiveRecord
             Html::tag('p', Html::tag('b', 'Phone: ') . Html::encode($this->phone)) . "\n" .
             Html::tag('p', Html::tag('b', 'Message: ') . nl2br(Html::encode($this->message)));
 
+    }
+
+    /**
+     * Message was readed?
+     *
+     * @return bool
+     */
+    public function isReaded()
+    {
+        return $this->status == self::STATUS_READED;
     }
 }

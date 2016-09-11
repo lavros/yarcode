@@ -3,7 +3,6 @@
 namespace common\models;
 
 use Yii;
-use yii\helpers\ArrayHelper;
 use yii\behaviors\BlameableBehavior;
 use yarcode\base\behaviors\TimestampBehavior;
 use yarcode\base\traits\StatusTrait;

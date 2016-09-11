@@ -18,7 +18,7 @@ class ContactSearch extends Contact
     public function rules()
     {
         return [
-            [['id', 'status'], 'integer'],
+            [['id', 'status', 'readed_by'], 'integer'],
             [['name', 'email', 'phone', 'message', 'created_at', 'readed_at'], 'safe'],
         ];
     }
@@ -63,6 +63,7 @@ class ContactSearch extends Contact
             'created_at' => $this->created_at,
             'readed_at' => $this->readed_at,
             'status' => $this->status,
+            'readed_by' => $this->readed_by,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
