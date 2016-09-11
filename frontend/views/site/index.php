@@ -5,7 +5,7 @@
 $this->title = 'Some Agency';
 ?>
 
-<?= $this->render('services', ['services' => $services]) ?>
+<?= $this->render('/service/service', ['services' => $services]) ?>
 
 <!-- Portfolio Grid Section -->
 <section id="portfolio" class="bg-light-gray">
@@ -278,22 +278,7 @@ $this->title = 'Some Agency';
     </div>
 </aside>
 
-<!-- Contact Section -->
-<section id="contact">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12 text-center">
-                <h2 class="section-heading">Contact Us</h2>
-                <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
-            </div>
-        </div>
-        <?php if (Yii::$app->session->hasFlash('contactSubmitted')): ?>
-        <div class="alert alert-success text-center lead"><strong><?= Yii::$app->session->getFlash('contactSubmitted') ?></strong></div>
-        <?php else: ?>
-        <?= $this->render('/contact/_form', ['model' => $contact]) ?>
-        <?php endif ?>
-    </div>
-</section>
+<?= $this->render('/contact/contact.php', ['model' => $contact]) ?>
 
 <!-- Portfolio Modals -->
 <!-- Use the modals below to showcase details about your portfolio projects! -->
