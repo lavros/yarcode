@@ -2,7 +2,7 @@
 /**
  * @var $this yii\web\View
  */
-$this->title = 'Web Studio';
+$this->title = 'Some Agency';
 ?>
 
 <?= $this->render('services', ['services' => $services]) ?>

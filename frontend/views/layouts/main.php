@@ -27,7 +27,7 @@ AppAsset::register($this);
 
 <?php
 NavBar::begin([
-    'brandLabel' => 'Web Studio',
+    'brandLabel' => 'Some Agency',
     'brandUrl' => Yii::$app->homeUrl,
     'options' => [
         'id' => 'mainNav',
