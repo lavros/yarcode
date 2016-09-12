@@ -35,6 +35,7 @@
                     ['label' => 'Frontend', 'icon' => 'fa fa-link', 'url' => Yii::$app->params['frontendBaseUrl']],
                     ['label' => 'Home', 'icon' => 'fa fa-home', 'url' => ['/site/index']],
                     ['label' => 'Services', 'icon' => 'fa fa-home', 'url' => ['/service/index']],
+                    ['label' => 'Clients', 'icon' => 'fa fa-home', 'url' => ['/client/index']],
                     ['label' => 'Contacts', 'icon' => 'fa fa-home', 'url' => ['/contact/index']],
                     ['label' => 'Change Password', 'icon' => 'fa fa-lock', 'url' => ['/profile/change-password']],
                 ],
