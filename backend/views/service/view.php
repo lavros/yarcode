@@ -53,8 +53,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => $model->getAttributeLabel('updated_by'),
                 'value' => UserAccount::findIdentity($model->updated_by)->profile->fullName,
             ],
-            'created_at',
-            'updated_at',
+            'created_at:datetime',
+            'updated_at:datetime',
         ],
     ]) ?>
 
