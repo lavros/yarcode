@@ -3,6 +3,9 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\BlameableBehavior;
+use yarcode\base\behaviors\TimestampBehavior;
+use yarcode\base\traits\StatusTrait;
 
 /**
  * This is the model class for table "{{%client}}".
@@ -20,6 +23,11 @@ use Yii;
  */
 class Client extends \yii\db\ActiveRecord
 {
+    use StatusTrait;
+
+    const STATUS_HIDDEN = 0;
+    const STATUS_PUBLISHED = 1;
+
     /**
      * @inheritdoc
      */
@@ -34,10 +42,32 @@ class Client extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'logo', 'position', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'required'],
+            [['name', 'logo', 'position', 'status'], 'required'],
             [['position', 'status', 'created_by', 'updated_by'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['name', 'logo', 'url'], 'string', 'max' => 255],
+            [['logo'], 'image', 'extensions' => 'png, jpg, gif'],
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => '\yiidreamteam\upload\FileUploadBehavior',
+                'attribute' => 'logo',
+                'filePath' => '@frontend/web/uploads/client/[[pk]].[[extension]]',
+                'fileUrl' => Yii::$app->params['frontendBaseUrl'] . '/uploads/client/[[pk]].[[extension]]',
+            ],
+            [
+                'class' => TimestampBehavior::className(),
+                'createdAtAttribute' => 'created_at',
+                'updatedAtAttribute' => 'updated_at'
+            ],
+            BlameableBehavior::className(),
         ];
     }
 
@@ -67,5 +97,16 @@ class Client extends \yii\db\ActiveRecord
     public static function find()
     {
         return new ClientQuery(get_called_class());
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public static function getStatusLabels()
+    {
+        return [
+            static::STATUS_HIDDEN => 'Hidden',
+            static::STATUS_PUBLISHED => 'Published',
+        ];
     }
 }
