@@ -31,4 +31,20 @@ class ClientQuery extends \yii\db\ActiveQuery
     {
         return parent::one($db);
     }
+
+    /**
+     * @return $this
+     */
+    public function orderByPosition()
+    {
+        return $this->orderBy(['position' => SORT_ASC]);
+    }
+
+    /**
+     * @return $this
+     */
+    public function published()
+    {
+        return $this->andWhere(['status' => Client::STATUS_PUBLISHED]);
+    }
 }
