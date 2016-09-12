@@ -1,11 +1,7 @@
 <?php
-
 use yii\helpers\Html;
 
-if ($services):
-?>
-
-
+if ($services): ?>
 <!-- Services Section -->
 <section id="services">
     <div class="container">

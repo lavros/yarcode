@@ -5,7 +5,7 @@
 $this->title = 'Some Agency';
 ?>
 
-<?= $this->render('/service/service', ['services' => $services]) ?>
+<?= frontend\widgets\ServiceWidget::widget() ?>
 
 <!-- Portfolio Grid Section -->
 <section id="portfolio" class="bg-light-gray">

@@ -94,10 +94,7 @@ class SiteController extends Controller
             }
         }
 
-        return $this->render('index', [
-            'services' => \common\models\Service::find()->orderByPosition()->published()->all(),
-            'contact' => $contact,
-        ]);
+        return $this->render('index', ['contact' => $contact]);
     }
 
     /**
