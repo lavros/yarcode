@@ -28,6 +28,9 @@ class Client extends \yii\db\ActiveRecord
     const STATUS_HIDDEN = 0;
     const STATUS_PUBLISHED = 1;
 
+    const SCENARIO_CREATE = 'create';
+    const SCENARIO_UPDATE = 'update';
+
     /**
      * @inheritdoc
      */
@@ -44,9 +47,20 @@ class Client extends \yii\db\ActiveRecord
         return [
             [['name', 'logo', 'position', 'status'], 'required'],
             [['position', 'status', 'created_by', 'updated_by'], 'integer'],
-            [['created_at', 'updated_at'], 'safe'],
-            [['name', 'logo', 'url'], 'string', 'max' => 255],
-            [['logo'], 'image', 'extensions' => 'png, jpg, gif'],
+            [['name', 'url'], 'string', 'max' => 255],
+            ['url', 'url', 'defaultScheme' => 'http'],
+            ['logo', 'file', 'extensions' => 'png, jpg, gif'],
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function scenarios()
+    {
+        return [
+            self::SCENARIO_CREATE => ['name', 'logo', 'url', 'position', 'status'],
+            self::SCENARIO_UPDATE => ['name', 'url', 'position', 'status']
         ];
     }
 
