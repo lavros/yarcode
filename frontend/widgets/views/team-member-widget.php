@@ -1,7 +1,7 @@
 <?php
-    use yii\helpers\Html
-?>
-<?php if ($teamMembers): ?>
+use yii\helpers\Html;
+
+if ($teamMembers): ?>
 <!-- Team Section -->
 <section id="team" class="bg-light-gray">
     <div class="container">

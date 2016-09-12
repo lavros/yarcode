@@ -1,6 +1,7 @@
 <?php
-    use yii\helpers\Html;
-?>
+use yii\helpers\Html;
+
+if ($clients): ?>
 <!-- Clients Aside -->
 <aside class="clients">
     <div class="container">
@@ -25,3 +26,4 @@
         </div>
     </div>
 </aside>
+<?php endif ?>
