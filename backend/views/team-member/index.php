@@ -25,12 +25,24 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
+            [
+                'attribute' => 'photo',
+                'format' => 'raw',
+                'value' => function($model) {
+                    return Html::img($model->getUploadedFileUrl('photo'));
+                },
+            ],
             'first_name',
             'last_name',
-            'photo',
             'post',
-            // 'position',
-            // 'status',
+            'position',
+            [
+                'attribute' => 'status',
+                'filter' => common\models\TeamMember::getStatusLabels(),
+                'value' => function($model) {
+                    return $model->getStatusLabel();
+                },
+            ],
             // 'created_by',
             // 'updated_by',
             // 'created_at',

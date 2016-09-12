@@ -2,11 +2,12 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use common\models\UserAccount;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\TeamMember */
 
-$this->title = $model->id;
+$this->title = $model->fullName;
 $this->params['breadcrumbs'][] = ['label' => 'Team Members', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -29,16 +30,32 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
+            [
+                'label' => $model->getAttributeLabel('photo'),
+                'format' => 'raw',
+                'value' => Html::img($model->getUploadedFileUrl('photo'), [
+                    'alt' => Html::encode($model->getUploadedFileUrl('photo')),
+                    'title' => Html::encode($model->getUploadedFileUrl('photo')),
+                ]),
+            ],
             'first_name',
             'last_name',
-            'photo',
             'post',
             'position',
-            'status',
-            'created_by',
-            'updated_by',
-            'created_at',
-            'updated_at',
+            [
+                'label' => $model->getAttributeLabel('status'),
+                'value' => $model->getStatusLabel(),
+            ],
+            [
+                'label' => $model->getAttributeLabel('created_by'),
+                'value' => UserAccount::findIdentity($model->created_by)->profile->fullName,
+            ],
+            [
+                'label' => $model->getAttributeLabel('updated_by'),
+                'value' => UserAccount::findIdentity($model->updated_by)->profile->fullName,
+            ],
+            'created_at:datetime',
+            'updated_at:datetime',
         ],
     ]) ?>
 

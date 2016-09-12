@@ -125,4 +125,11 @@ class TeamMember extends \yii\db\ActiveRecord
             static::STATUS_PUBLISHED => 'Published',
         ];
     }
+
+    /**
+     * @return string
+     */
+    public function getFullName() {
+        return implode(' ', [$this->last_name, $this->first_name]);
+    }
 }
