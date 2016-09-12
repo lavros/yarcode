@@ -3,6 +3,9 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\BlameableBehavior;
+use yarcode\base\behaviors\TimestampBehavior;
+use yarcode\base\traits\StatusTrait;
 
 /**
  * This is the model class for table "{{%team_member}}".
@@ -21,6 +24,14 @@ use Yii;
  */
 class TeamMember extends \yii\db\ActiveRecord
 {
+    use StatusTrait;
+
+    const STATUS_HIDDEN = 0;
+    const STATUS_PUBLISHED = 1;
+
+    const SCENARIO_CREATE = 'create';
+    const SCENARIO_UPDATE = 'update';
+
     /**
      * @inheritdoc
      */
@@ -35,12 +46,43 @@ class TeamMember extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['first_name', 'photo', 'post', 'position', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'required'],
+            [['first_name', 'photo', 'post', 'position', 'status'], 'required'],
             [['position', 'status', 'created_by', 'updated_by'], 'integer'],
-            [['created_at', 'updated_at'], 'safe'],
             [['first_name', 'last_name'], 'string', 'max' => 50],
-            [['photo'], 'string', 'max' => 255],
             [['post'], 'string', 'max' => 100],
+            ['photo', 'file', 'extensions' => 'png, jpg, gif'],
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function scenarios()
+    {
+        return [
+            self::SCENARIO_CREATE => ['first_name', 'last_name', 'photo', 'post', 'position', 'status'],
+            self::SCENARIO_UPDATE => ['first_name', 'last_name', 'post', 'position', 'status']
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => '\yiidreamteam\upload\FileUploadBehavior',
+                'attribute' => 'photo',
+                'filePath' => '@frontend/web/uploads/team-member/[[pk]].[[extension]]',
+                'fileUrl' => Yii::$app->params['frontendBaseUrl'] . '/uploads/team-member/[[pk]].[[extension]]',
+            ],
+            [
+                'class' => TimestampBehavior::className(),
+                'createdAtAttribute' => 'created_at',
+                'updatedAtAttribute' => 'updated_at'
+            ],
+            BlameableBehavior::className(),
         ];
     }
 
@@ -71,5 +113,16 @@ class TeamMember extends \yii\db\ActiveRecord
     public static function find()
     {
         return new TeamMemberQuery(get_called_class());
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public static function getStatusLabels()
+    {
+        return [
+            static::STATUS_HIDDEN => 'Hidden',
+            static::STATUS_PUBLISHED => 'Published',
+        ];
     }
 }
