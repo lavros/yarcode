@@ -42,7 +42,6 @@ class Contact extends \yii\db\ActiveRecord
         return [
             [['name', 'email', 'phone', 'message'], 'required'],
             [['message'], 'string'],
-            [['created_at', 'readed_at'], 'safe'],
             [['status', 'readed_by'], 'integer'],
             [['name', 'phone'], 'string', 'max' => 50],
             [['email'], 'string', 'max' => 100],

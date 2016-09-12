@@ -83,10 +83,11 @@ class SiteController extends Controller
                 // For load created_at.
                 $contact->refresh();
 
+                // Need async use or cron script.
                 Yii::$app->mailer->compose()
-                    ->setFrom('notify@agency.com')
-                    ->setTo('manager@agency.com')
-                    ->setSubject('agency.com: new message from contact form')
+                    ->setFrom(Yii::$app->params['notifyEmail'])
+                    ->setTo(Yii::$app->params['managerEmail'])
+                    ->setSubject(Yii::$app->request->serverName . ': new message from contact form')
                     ->setHtmlBody($contact->buildHtmlMessage())
                     ->send();
 
