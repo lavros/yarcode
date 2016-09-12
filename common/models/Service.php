@@ -44,8 +44,7 @@ class Service extends \yii\db\ActiveRecord
         return [
             [['name', 'position', 'status'], 'required'],
             [['position', 'status', 'created_by', 'updated_by'], 'integer'],
-            [['created_at', 'updated_at'], 'safe'],
-            [['icon'], 'image', 'extensions' => 'png, jpg, gif'],
+            [['icon'], 'file', 'extensions' => 'png, jpg, gif'],
             [['name'], 'string', 'max' => 255],
             [['content'], 'string', 'max' => 500],
         ];
@@ -66,7 +65,7 @@ class Service extends \yii\db\ActiveRecord
             [
                 'class' => TimestampBehavior::className(),
                 'createdAtAttribute' => 'created_at',
-                'updatedAtAttribute' => 'created_at'
+                'updatedAtAttribute' => 'updated_at'
             ],
             BlameableBehavior::className(),
         ];
