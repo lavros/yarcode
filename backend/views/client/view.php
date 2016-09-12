@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use common\models\UserAccount;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Client */
@@ -30,12 +31,28 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'name',
-            'logo',
+            [
+                'label' => $model->getAttributeLabel('logo'),
+                'format' => 'raw',
+                'value' => Html::img($model->getUploadedFileUrl('logo'), [
+                    'alt' => Html::encode($model->getUploadedFileUrl('logo')),
+                    'title' => Html::encode($model->getUploadedFileUrl('logo')),
+                ]),
+            ],
             'url:url',
             'position',
-            'status',
-            'created_by',
-            'updated_by',
+            [
+                'label' => $model->getAttributeLabel('status'),
+                'value' => $model->getStatusLabel(),
+            ],
+            [
+                'label' => $model->getAttributeLabel('created_by'),
+                'value' => UserAccount::findIdentity($model->created_by)->profile->fullName,
+            ],
+            [
+                'label' => $model->getAttributeLabel('updated_by'),
+                'value' => UserAccount::findIdentity($model->updated_by)->profile->fullName,
+            ],
             'created_at',
             'updated_at',
         ],
