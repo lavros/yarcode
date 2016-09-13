@@ -31,4 +31,20 @@ class ProjectCategoryQuery extends \yii\db\ActiveQuery
     {
         return parent::one($db);
     }
+
+    /**
+     * @return $this
+     */
+    public function orderByName()
+    {
+        return $this->orderBy(['name' => SORT_ASC]);
+    }
+
+    /**
+     * @return $this
+     */
+    public function published()
+    {
+        return $this->andWhere(['status' => ProjectCategory::STATUS_PUBLISHED]);
+    }
 }

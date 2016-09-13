@@ -20,7 +20,8 @@
         "kartik-v/yii2-widget-growl": "^1.1",
         "yarcode/yii2-fa": "^1.0",
         "dmstr/yii2-adminlte-asset": "2.*",
-        "yii-dream-team/yii2-upload-behavior": "*"
+        "yii-dream-team/yii2-upload-behavior": "*",
+        "2amigos/yii2-ckeditor-widget": "~1.0"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

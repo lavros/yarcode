@@ -95,4 +95,12 @@ class ProjectCategory extends \yii\db\ActiveRecord
             static::STATUS_PUBLISHED => 'Published',
         ];
     }
+
+    /**
+     * @return array list of categories.
+     */
+    public static function getListData()
+    {
+        return yii\helpers\ArrayHelper::map(ProjectCategory::find()->orderByName()->published()->all(), 'id', 'name');
+    }
 }

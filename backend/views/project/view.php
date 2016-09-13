@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use common\models\UserAccount;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Project */
@@ -30,17 +31,36 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'name',
-            'project_category_id',
+            [
+                'label' => $model->getAttributeLabel('project_category_id'),
+                'value' => $model->category->name,
+            ],
             'title',
             'intro',
-            'content:ntext',
-            'picture',
+            'content:html',
+            [
+                'label' => $model->getAttributeLabel('picture'),
+                'format' => 'raw',
+                'value' => Html::img($model->getThumbFileUrl('picture'), [
+                    'alt' => Html::encode($model->getThumbFileUrl('picture')),
+                    'title' => Html::encode($model->getThumbFileUrl('picture')),
+                ]),
+            ],
             'position',
-            'status',
-            'created_by',
-            'updated_by',
-            'created_at',
-            'updated_at',
+            [
+                'label' => $model->getAttributeLabel('status'),
+                'value' => $model->getStatusLabel(),
+            ],
+            [
+                'label' => $model->getAttributeLabel('created_by'),
+                'value' => UserAccount::findIdentity($model->created_by)->profile->fullName,
+            ],
+            [
+                'label' => $model->getAttributeLabel('updated_by'),
+                'value' => UserAccount::findIdentity($model->updated_by)->profile->fullName,
+            ],
+            'created_at:datetime',
+            'updated_at:datetime',
         ],
     ]) ?>
 

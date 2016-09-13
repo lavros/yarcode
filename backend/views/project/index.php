@@ -26,13 +26,25 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'name',
-            'project_category_id',
+            [
+                'attribute' => 'project_category_id',
+                'filter' => common\models\ProjectCategory::getListData(),
+                'value' => function($model) {
+                    return $model->category->name;
+                },
+            ],
             'title',
-            'intro',
+            //'intro',
             // 'content:ntext',
             // 'picture',
-            // 'position',
-            // 'status',
+            'position',
+            [
+                'attribute' => 'status',
+                'filter' => common\models\Project::getStatusLabels(),
+                'value' => function($model) {
+                    return $model->getStatusLabel();
+                },
+            ],
             // 'created_by',
             // 'updated_by',
             // 'created_at',
