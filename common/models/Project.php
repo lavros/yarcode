@@ -3,6 +3,9 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\BlameableBehavior;
+use yarcode\base\behaviors\TimestampBehavior;
+use yarcode\base\traits\StatusTrait;
 
 /**
  * This is the model class for table "{{%project}}".
@@ -25,6 +28,14 @@ use Yii;
  */
 class Project extends \yii\db\ActiveRecord
 {
+    use StatusTrait;
+
+    const STATUS_HIDDEN = 0;
+    const STATUS_PUBLISHED = 1;
+
+    const SCENARIO_CREATE = 'create';
+    const SCENARIO_UPDATE = 'update';
+
     /**
      * @inheritdoc
      */
@@ -39,13 +50,54 @@ class Project extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'project_category_id', 'title', 'intro', 'content', 'picture', 'position', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'required'],
+            [['name', 'project_category_id', 'title', 'intro', 'content', 'picture', 'position', 'status'], 'required'],
             [['project_category_id', 'position', 'status', 'created_by', 'updated_by'], 'integer'],
             [['content'], 'string'],
-            [['created_at', 'updated_at'], 'safe'],
-            [['name', 'title', 'picture'], 'string', 'max' => 255],
+            [['name', 'title'], 'string', 'max' => 255],
             [['intro'], 'string', 'max' => 500],
             [['project_category_id'], 'exist', 'skipOnError' => true, 'targetClass' => ProjectCategory::className(), 'targetAttribute' => ['project_category_id' => 'id']],
+            [['picture'], 'file', 'extensions' => 'jpg, png, gif'],
+            [['description'], 'default', 'value' => null],
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function scenarios()
+    {
+        return [
+            self::SCENARIO_CREATE => ['name', 'project_category_id', 'title', 'intro', 'content', 'picture', 'position', 'status'],
+            self::SCENARIO_UPDATE => ['name', 'project_category_id', 'title', 'intro', 'content', 'position', 'status']
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => '\yiidreamteam\upload\ImageUploadBehavior',
+                'attribute' => 'picture',
+                'thumbs' => [
+                    'thumb' => [
+                        'width' => '400',
+                        'height' => '289'
+                    ],
+                ],
+                'filePath' => '@frontend/web/uploads/project/[[pk]].[[extension]]',
+                'fileUrl' => Yii::$app->params['frontendBaseUrl'] . '/uploads/project/[[pk]].[[extension]]',
+                'thumbPath' => '@frontend/web/uploads/project/thumb/[[pk]].[[extension]]',
+                'thumbUrl' => Yii::$app->params['frontendBaseUrl'] . '/uploads/project/thumb/[[pk]].[[extension]]',
+            ],
+            [
+                'class' => TimestampBehavior::className(),
+                'createdAtAttribute' => 'created_at',
+                'updatedAtAttribute' => 'updated_at'
+            ],
+            BlameableBehavior::className(),
         ];
     }
 
@@ -57,7 +109,7 @@ class Project extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'name' => 'Name',
-            'project_category_id' => 'Project Category ID',
+            'project_category_id' => 'Category',
             'title' => 'Title',
             'intro' => 'Intro',
             'content' => 'Content',
@@ -74,7 +126,7 @@ class Project extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getProjectCategory()
+    public function getCategory()
     {
         return $this->hasOne(ProjectCategory::className(), ['id' => 'project_category_id']);
     }
@@ -86,5 +138,16 @@ class Project extends \yii\db\ActiveRecord
     public static function find()
     {
         return new ProjectQuery(get_called_class());
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public static function getStatusLabels()
+    {
+        return [
+            static::STATUS_HIDDEN => 'Hidden',
+            static::STATUS_PUBLISHED => 'Published',
+        ];
     }
 }
