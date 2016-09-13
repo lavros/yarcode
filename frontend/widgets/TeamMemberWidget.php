@@ -17,7 +17,7 @@ class TeamMemberWidget extends Widget {
 
     public function run()
     {
-        return $this->render('team-member-widget.php', [
+        return $this->render('team-member-widget', [
             'teamMembers' => $this->teamMembers
         ]);
     }
