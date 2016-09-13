@@ -35,6 +35,7 @@
                     ['label' => 'Frontend', 'icon' => 'fa fa-link', 'url' => Yii::$app->params['frontendBaseUrl']],
                     ['label' => 'Home', 'icon' => 'fa fa-home', 'url' => ['/site/index']],
                     ['label' => 'Services', 'icon' => 'fa fa-home', 'url' => ['/service/index']],
+                    ['label' => 'Project Categories', 'icon' => 'fa fa-home', 'url' => ['/project-category/index']],
                     ['label' => 'Team members', 'icon' => 'fa fa-home', 'url' => ['/team-member/index']],
                     ['label' => 'Clients', 'icon' => 'fa fa-home', 'url' => ['/client/index']],
                     ['label' => 'Contacts', 'icon' => 'fa fa-home', 'url' => ['/contact/index']],
