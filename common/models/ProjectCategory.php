@@ -3,6 +3,9 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\BlameableBehavior;
+use yarcode\base\behaviors\TimestampBehavior;
+use yarcode\base\traits\StatusTrait;
 
 /**
  * This is the model class for table "{{%project_category}}".
@@ -17,6 +20,11 @@ use Yii;
  */
 class ProjectCategory extends \yii\db\ActiveRecord
 {
+    use StatusTrait;
+
+    const STATUS_HIDDEN = 0;
+    const STATUS_PUBLISHED = 1;
+
     /**
      * @inheritdoc
      */
@@ -31,10 +39,24 @@ class ProjectCategory extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'required'],
+            [['name', 'status'], 'required'],
             [['status', 'created_by', 'updated_by'], 'integer'],
-            [['created_at', 'updated_at'], 'safe'],
             [['name'], 'string', 'max' => 255],
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::className(),
+                'createdAtAttribute' => 'created_at',
+                'updatedAtAttribute' => 'updated_at'
+            ],
+            BlameableBehavior::className(),
         ];
     }
 
@@ -61,5 +83,16 @@ class ProjectCategory extends \yii\db\ActiveRecord
     public static function find()
     {
         return new ProjectCategoryQuery(get_called_class());
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public static function getStatusLabels()
+    {
+        return [
+            static::STATUS_HIDDEN => 'Hidden',
+            static::STATUS_PUBLISHED => 'Published',
+        ];
     }
 }

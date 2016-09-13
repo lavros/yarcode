@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use common\models\UserAccount;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\ProjectCategory */
@@ -30,11 +31,20 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'name',
-            'status',
-            'created_by',
-            'updated_by',
-            'created_at',
-            'updated_at',
+            [
+                'label' => $model->getAttributeLabel('status'),
+                'value' => $model->getStatusLabel(),
+            ],
+            [
+                'label' => $model->getAttributeLabel('created_by'),
+                'value' => UserAccount::findIdentity($model->created_by)->profile->fullName,
+            ],
+            [
+                'label' => $model->getAttributeLabel('updated_by'),
+                'value' => UserAccount::findIdentity($model->updated_by)->profile->fullName,
+            ],
+            'created_at:datetime',
+            'updated_at:datetime',
         ],
     ]) ?>
 

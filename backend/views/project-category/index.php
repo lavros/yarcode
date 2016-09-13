@@ -26,9 +26,15 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'name',
-            'status',
-            'created_by',
-            'updated_by',
+            [
+                'attribute' => 'status',
+                'filter' => common\models\ProjectCategory::getStatusLabels(),
+                'value' => function($model) {
+                    return $model->getStatusLabel();
+                },
+            ],
+            //'created_by',
+            //'updated_by',
             // 'created_at',
             // 'updated_at',
 
