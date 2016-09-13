@@ -9,11 +9,6 @@ namespace common\models;
  */
 class ProjectQuery extends \yii\db\ActiveQuery
 {
-    /*public function active()
-    {
-        return $this->andWhere('[[status]]=1');
-    }*/
-
     /**
      * @inheritdoc
      * @return Project[]|array
@@ -30,5 +25,21 @@ class ProjectQuery extends \yii\db\ActiveQuery
     public function one($db = null)
     {
         return parent::one($db);
+    }
+
+    /**
+     * @return $this
+     */
+    public function orderByPosition()
+    {
+        return $this->orderBy(['position' => SORT_ASC]);
+    }
+
+    /**
+     * @return $this
+     */
+    public function published()
+    {
+        return $this->andWhere(['status' => Project::STATUS_PUBLISHED]);
     }
 }
