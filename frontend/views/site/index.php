@@ -2,7 +2,6 @@
 /**
  * @var $this yii\web\View
  */
-$this->title = 'Some Agency';
 ?>
 
 <?= frontend\widgets\ServiceWidget::widget() ?>

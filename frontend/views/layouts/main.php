@@ -4,6 +4,7 @@
 /* @var $content string */
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
@@ -19,7 +20,7 @@ AppAsset::register($this);
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?></title>
+    <title><?= empty($this->title) ? '' : Html::encode($this->title) . ' | ' ?>Some Agency</title>
     <?php $this->head() ?>
 </head>
 <body>
@@ -80,18 +81,16 @@ NavBar::end();
         <div class="intro-text">
             <div class="intro-lead-in">Welcome To Our Studio!</div>
             <div class="intro-heading">It's Nice To Meet You</div>
-            <a href="#services" class="page-scroll btn btn-xl">Tell Me More</a>
+            <a href="/#services" class="page-scroll btn btn-xl">Tell Me More</a>
         </div>
     </div>
 </header>
-
 <?= $content ?>
-
 <footer>
     <div class="container">
         <div class="row">
             <div class="col-md-4">
-                <span class="copyright">Copyright &copy; Your Website 2016</span>
+                <span class="copyright">&copy; Some Agency <?= date('Y') ?></span>
             </div>
             <div class="col-md-4">
                 <ul class="list-inline social-buttons">
@@ -105,10 +104,8 @@ NavBar::end();
             </div>
             <div class="col-md-4">
                 <ul class="list-inline quicklinks">
-                    <li><a href="#">Privacy Policy</a>
-                    </li>
-                    <li><a href="#">Terms of Use</a>
-                    </li>
+                    <li><?= Html::a('Privacy Policy', Url::to(['site/privacy-policy'])) ?></li>
+                    <li><?= Html::a('Terms of Use', Url::to(['site/terms-of-use'])) ?></li>
                 </ul>
             </div>
         </div>

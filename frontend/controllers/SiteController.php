@@ -21,6 +21,11 @@ class SiteController extends Controller
     /**
      * @inheritdoc
      */
+    public $layout = 'page';
+
+    /**
+     * @inheritdoc
+     */
     public function behaviors()
     {
         return ArrayHelper::merge(parent::behaviors(), [
@@ -67,6 +72,8 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        $this->layout = 'main';
+
         $contact = new \common\models\Contact();
 
         if (Yii::$app->request->post('Contact')) {
@@ -178,5 +185,25 @@ class SiteController extends Controller
         return $this->render('reset-password', [
             'model' => $model,
         ]);
+    }
+
+    /**
+     * Page privacy policy.
+     *
+     * @return mixed
+     */
+    public function actionPrivacyPolicy()
+    {
+        return $this->render('privacy-policy');
+    }
+
+    /**
+     * Page terms of use.
+     *
+     * @return mixed
+     */
+    public function actionTermsOfUse()
+    {
+        return $this->render('terms-of-use');
     }
 }
