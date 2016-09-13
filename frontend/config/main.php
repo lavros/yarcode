@@ -32,11 +32,7 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'enableStrictParsing' => true,
-            'rules' => [
-                '/' => 'site/index',
-                '/login' => 'site/login',
-                '/logout' => 'site/logout',
-            ],
+            'rules' => require(__DIR__ . '/routes.php'),
         ],
     ],
     'params' => $params,
