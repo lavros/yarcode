@@ -31,4 +31,20 @@ class TimelineQuery extends \yii\db\ActiveQuery
     {
         return parent::one($db);
     }
+
+    /**
+     * @return $this
+     */
+    public function orderByDateFrom()
+    {
+        return $this->orderBy(['date_from' => SORT_ASC]);
+    }
+
+    /**
+     * @return $this
+     */
+    public function published()
+    {
+        return $this->andWhere(['status' => Timeline::STATUS_PUBLISHED]);
+    }
 }

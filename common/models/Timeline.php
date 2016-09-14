@@ -186,4 +186,27 @@ class Timeline extends \yii\db\ActiveRecord
     {
         return ArrayHelper::getValue(static::getDateFormatLabels(), $format, $default);
     }
+
+    /**
+     * @return bool
+     */
+    public function isRightSide()
+    {
+        return $this->side == self::SIDE_RIGHT;
+    }
+
+    /**
+     * @return string formatted date
+     */
+    public function getDate()
+    {
+        $formatter = Yii::$app->formatter;
+        $formattedDate = $formatter->asDate($this->date_from, $this->date_from_format);
+
+        if ($this->date_to) {
+            $formattedDate .= '–' . $formatter->asDate($this->date_to, $this->date_to_format);
+        }
+
+        return $formattedDate;
+    }
 }
