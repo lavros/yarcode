@@ -36,45 +36,56 @@ AppAsset::register($this);
 <?php
 NavBar::begin([
     'brandLabel' => 'Some Agency',
-    'brandUrl' => '#page-top',
+    'brandUrl' => '/#page-top',
     'brandOptions' => [
         'class' => 'page-scroll',
+        'data-target' => '#page-top',
     ],
     'options' => [
         'id' => 'mainNav',
         'class' => 'navbar navbar-default navbar-custom navbar-fixed-top',
     ],
 ]);
-$linkOptions = ['class' => 'page-scroll'];
-
-// Need for fix scrollspy on index page.
-$linkPrefix = Yii::$app->location->isHome ? '' : '/';
-
 $menuItems = [
     [
         'label' => 'Services',
-        'url' => "{$linkPrefix}#services",
-        'linkOptions' => $linkOptions,
+        'url' => "/#services",
+        'linkOptions' => [
+            'class' => 'page-scroll',
+            'data-target' => '#services',
+        ],
     ],
     [
         'label' => 'Portfolio',
-        'url' => "{$linkPrefix}#portfolio",
-        'linkOptions' => $linkOptions,
+        'url' => "#portfolio",
+        'linkOptions' => [
+            'class' => 'page-scroll',
+            'data-target' => '#portfolio',
+        ],
     ],
     [
         'label' => 'About',
-        'url' => "{$linkPrefix}#about",
-        'linkOptions' => $linkOptions,
+        'url' => "#about",
+        'linkOptions' => [
+            'class' => 'page-scroll',
+            'data-target' => '#about',
+        ],
     ],
     [
         'label' => 'Team',
-        'url' => "{$linkPrefix}#team",
-        'linkOptions' => $linkOptions,
+        'url' => "#team",
+        'linkOptions' => [
+            'class' => 'page-scroll',
+            'data-target' => '#team',
+        ]
     ],
     [
         'label' => 'Contact',
-        'url' => "{$linkPrefix}#contact",
-        'linkOptions' => $linkOptions,
+        'url' => "#contact",
+        'linkOptions' => [
+            'class' => 'page-scroll',
+            'data-target' => '#contact',
+        ]
     ],
 ];
 echo Nav::widget([
@@ -90,7 +101,7 @@ NavBar::end();
         <div class="intro-text">
             <div class="intro-lead-in">Welcome To Our Studio!</div>
             <div class="intro-heading">It's Nice To Meet You</div>
-            <a href="<?= $linkPrefix ?>#services" class="page-scroll btn btn-xl">Tell Me More</a>
+            <a href="/#services" data-target="#services" class="page-scroll btn btn-xl">Tell Me More</a>
         </div>
     </div>
 </header>
