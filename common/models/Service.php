@@ -28,6 +28,9 @@ class Service extends \yii\db\ActiveRecord
     const STATUS_HIDDEN = 0;
     const STATUS_PUBLISHED = 1;
 
+    const SCENARIO_CREATE = 'create';
+    const SCENARIO_UPDATE = 'update';
+
     /**
      * @inheritdoc
      */
@@ -42,11 +45,22 @@ class Service extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'position', 'status'], 'required'],
+            [['name', 'content', 'icon', 'position', 'status'], 'required'],
             [['position', 'status', 'created_by', 'updated_by'], 'integer'],
             [['icon'], 'file', 'extensions' => 'png, jpg, gif'],
             [['name'], 'string', 'max' => 255],
             [['content'], 'string', 'max' => 500],
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function scenarios()
+    {
+        return [
+            self::SCENARIO_CREATE => ['name', 'content', 'icon', 'position', 'status'],
+            self::SCENARIO_UPDATE => ['name', 'content', 'position', 'status']
         ];
     }
 
