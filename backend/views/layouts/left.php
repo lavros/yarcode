@@ -36,6 +36,8 @@
                     ['label' => 'Home', 'icon' => 'fa fa-home', 'url' => ['/site/index']],
                     ['label' => 'Services', 'icon' => 'fa fa-home', 'url' => ['/service/index']],
                     ['label' => 'Project Categories', 'icon' => 'fa fa-home', 'url' => ['/project-category/index']],
+                    ['label' => 'Projects', 'icon' => 'fa fa-home', 'url' => ['/project/index']],
+                    ['label' => 'Timelines', 'icon' => 'fa fa-home', 'url' => ['/timeline/index']],
                     ['label' => 'Team members', 'icon' => 'fa fa-home', 'url' => ['/team-member/index']],
                     ['label' => 'Clients', 'icon' => 'fa fa-home', 'url' => ['/client/index']],
                     ['label' => 'Contacts', 'icon' => 'fa fa-home', 'url' => ['/contact/index']],
