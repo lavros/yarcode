@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use common\models\UserAccount;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Timeline */
@@ -29,19 +30,50 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'date_from',
-            'date_from_format',
-            'date_to',
-            'date_to_format',
-            'image',
+            [
+                'label' => $model->getAttributeLabel('image'),
+                'format' => 'raw',
+                'value' => Html::img($model->getUploadedFileUrl('image'), [
+                    'alt' => Html::encode($model->getUploadedFileUrl('image')),
+                    'title' => Html::encode($model->getUploadedFileUrl('image')),
+                ]),
+            ],
             'title',
+            [
+                'label' => $model->getAttributeLabel('date_from'),
+                'value' => $model->date_from . ' (' . Yii::$app->formatter->asDate($model->date_from) . ')',
+            ],
+            [
+                'label' => $model->getAttributeLabel('date_from_format'),
+                'value' => $model->getDateFormatLabel($model->date_from_format),
+            ],
+            [
+                'label' => $model->getAttributeLabel('date_to'),
+                'value' => empty($model->date_to) ? $model->date_to : $model->date_to . ' (' . Yii::$app->formatter->asDate($model->date_to) . ')',
+            ],
+            [
+                'label' => $model->getAttributeLabel('date_to_format'),
+                'value' => $model->getDateFormatLabel($model->date_to_format),
+            ],
             'content:ntext',
-            'side',
-            'status',
-            'created_by',
-            'updated_by',
-            'created_at',
-            'updated_at',
+            [
+                'label' => $model->getAttributeLabel('side'),
+                'value' => $model->getSideLabel(),
+            ],
+            [
+                'label' => $model->getAttributeLabel('status'),
+                'value' => $model->getStatusLabel(),
+            ],
+            [
+                'label' => $model->getAttributeLabel('created_by'),
+                'value' => UserAccount::findIdentity($model->created_by)->profile->fullName,
+            ],
+            [
+                'label' => $model->getAttributeLabel('updated_by'),
+                'value' => UserAccount::findIdentity($model->updated_by)->profile->fullName,
+            ],
+            'created_at:datetime',
+            'updated_at:datetime',
         ],
     ]) ?>
 

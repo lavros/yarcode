@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use common\models\Timeline;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\TimelineSearch */
@@ -25,15 +26,45 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
+            [
+                'attribute' => 'image',
+                'format' => 'raw',
+                'value' => function($model) {
+                    return Html::img($model->getUploadedFileUrl('image'), ['style' => 'max-width:100px']);
+                },
+            ],
+            'title',
             'date_from',
-            'date_from_format',
+            [
+                'attribute' => 'date_from_format',
+                'filter' => Timeline::getDateFormatLabels(),
+                'value' => function($model) {
+                    return $model->getDateFormatLabel($model->date_from_format);
+                },
+            ],
             'date_to',
-            'date_to_format',
-            // 'image',
-            // 'title',
+            [
+                'attribute' => 'date_to_format',
+                'filter' => Timeline::getDateFormatLabels(),
+                'value' => function($model) {
+                    return $model->getDateFormatLabel($model->date_to_format);
+                },
+            ],
             // 'content:ntext',
-            // 'side',
-            // 'status',
+            [
+                'attribute' => 'side',
+                'filter' => Timeline::getSideLabels(),
+                'value' => function($model) {
+                    return $model->getSideLabel();
+                },
+            ],
+            [
+                'attribute' => 'status',
+                'filter' => Timeline::getStatusLabels(),
+                'value' => function($model) {
+                    return $model->getStatusLabel();
+                },
+            ],
             // 'created_by',
             // 'updated_by',
             // 'created_at',
