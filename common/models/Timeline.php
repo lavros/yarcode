@@ -58,7 +58,7 @@ class Timeline extends \yii\db\ActiveRecord
     {
         return [
             [['date_from', 'date_from_format', 'image', 'title', 'content', 'side', 'status'], 'required'],
-            [['date_from', 'date_to'], 'safe'],
+            [['date_from', 'date_to'], 'date', 'format' => 'yyyy-MM-dd'],
             [['content'], 'string'],
             [['side', 'status', 'created_by', 'updated_by'], 'integer'],
             [['date_from_format', 'date_to_format'], 'string', 'max' => 50],
