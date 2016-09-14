@@ -17,7 +17,7 @@ class ClientWidget extends Widget {
 
     public function run()
     {
-        return $this->render('client-widget', [
+        return $this->render('client', [
             'clients' => $this->clients
         ]);
     }

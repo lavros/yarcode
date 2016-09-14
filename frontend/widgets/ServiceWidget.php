@@ -17,7 +17,7 @@ class ServiceWidget extends Widget {
 
     public function run()
     {
-        return $this->render('service-widget', [
+        return $this->render('service', [
             'services' => $this->services
         ]);
     }
