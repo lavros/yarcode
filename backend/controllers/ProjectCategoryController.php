@@ -3,9 +3,10 @@
 namespace backend\controllers;
 
 use Yii;
+use backend\components\Controller;
 use common\models\ProjectCategory;
 use common\models\ProjectCategorySearch;
-use yii\web\Controller;
+use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -19,14 +20,14 @@ class ProjectCategoryController extends Controller
      */
     public function behaviors()
     {
-        return [
+        return ArrayHelper::merge(parent::behaviors(), [
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
                 ],
             ],
-        ];
+        ]);
     }
 
     /**
