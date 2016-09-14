@@ -47,6 +47,11 @@ class TimelineSearch extends Timeline
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => [
+                'defaultOrder' => [
+                    'date_from' => SORT_DESC
+                ]
+            ],
         ]);
 
         $this->load($params);
