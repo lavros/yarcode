@@ -6,6 +6,7 @@ use Yii;
 use yii\behaviors\BlameableBehavior;
 use yarcode\base\behaviors\TimestampBehavior;
 use yarcode\base\traits\StatusTrait;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "{{%timeline}}".
@@ -162,7 +163,7 @@ class Timeline extends \yii\db\ActiveRecord
      * @param null $default
      * @return string|null
      */
-    public function getSideLabel($default)
+    public function getSideLabel($default = null)
     {
         return ArrayHelper::getValue(static::getSideLabels(), $this->side, $default);
     }
