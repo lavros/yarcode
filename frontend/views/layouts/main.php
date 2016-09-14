@@ -21,53 +21,62 @@ AppAsset::register($this);
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
     <title><?= empty($this->title) ? '' : Html::encode($this->title) . ' | ' ?>Some Agency</title>
+
+    <!-- Custom Fonts -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
     <?php $this->head() ?>
 </head>
-<body>
+<body id="page-top">
 <?php $this->beginBody() ?>
 
 <?php
 NavBar::begin([
     'brandLabel' => 'Some Agency',
-    'brandUrl' => Yii::$app->homeUrl,
+    'brandUrl' => '#page-top',
+    'brandOptions' => [
+        'class' => 'page-scroll',
+    ],
     'options' => [
         'id' => 'mainNav',
         'class' => 'navbar navbar-default navbar-custom navbar-fixed-top',
     ],
 ]);
+$linkOptions = ['class' => 'page-scroll'];
+
+// Need for fix scrollspy on index page.
+$linkPrefix = Yii::$app->location->isHome ? '' : '/';
+
 $menuItems = [
     [
         'label' => 'Services',
-        'url' => '/#services'
+        'url' => "{$linkPrefix}#services",
+        'linkOptions' => $linkOptions,
     ],
     [
         'label' => 'Portfolio',
-        'url' => '/#portfolio'
+        'url' => "{$linkPrefix}#portfolio",
+        'linkOptions' => $linkOptions,
     ],
     [
         'label' => 'About',
-        'url' => '/#about'
+        'url' => "{$linkPrefix}#about",
+        'linkOptions' => $linkOptions,
     ],
     [
         'label' => 'Team',
-        'url' => '/#team'
+        'url' => "{$linkPrefix}#team",
+        'linkOptions' => $linkOptions,
     ],
     [
         'label' => 'Contact',
-        'url' => '/#contact'
+        'url' => "{$linkPrefix}#contact",
+        'linkOptions' => $linkOptions,
     ],
 ];
-if (Yii::$app->user->isGuest) {
-    $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
-} else {
-    $menuItems[] = ['label' => '<i class="fa fa-user"></i> ' . Yii::$app->user->identity->name, 'items' => [
-        [
-            'label' => 'Logout',
-            'url' => ['/site/logout'],
-            'linkOptions' => ['data-method' => 'post']
-        ],
-    ]];
-}
 echo Nav::widget([
     'options' => ['class' => 'navbar-nav navbar-right'],
     'items' => $menuItems,
@@ -81,7 +90,7 @@ NavBar::end();
         <div class="intro-text">
             <div class="intro-lead-in">Welcome To Our Studio!</div>
             <div class="intro-heading">It's Nice To Meet You</div>
-            <a href="/#services" class="page-scroll btn btn-xl">Tell Me More</a>
+            <a href="<?= $linkPrefix ?>#services" class="page-scroll btn btn-xl">Tell Me More</a>
         </div>
     </div>
 </header>

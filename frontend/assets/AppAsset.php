@@ -22,8 +22,7 @@ class AppAsset extends AssetBundle
         'css/site.css',
     ];
     public $js = [
-        '/js/jqBootstrapValidation.js',
-        '/js/contact_me.js',
+        '/js/jquery.easing.min.js',
         '/js/agency.min.js',
     ];
     public $depends = [

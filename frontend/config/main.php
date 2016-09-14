@@ -34,6 +34,9 @@ return [
             'enableStrictParsing' => true,
             'rules' => require(__DIR__ . '/routes.php'),
         ],
+        'location' => [
+            'class' => 'common\components\Location'
+        ],
     ],
     'params' => $params,
 ];
